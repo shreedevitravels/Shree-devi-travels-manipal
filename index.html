@@ -4,12 +4,7 @@
 <title>Devi Travels</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0ea5e9">
-
 <style>
-
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -18,27 +13,19 @@ body {
     background-size: cover;
 }
 
-/* HEADER */
 header {
     text-align: center;
     padding: 20px;
     background: linear-gradient(45deg,#0d6efd,#00c6ff);
 }
 
-/* CONTAINER */
 .container {
     margin: 20px;
     padding: 25px;
     border-radius: 20px;
     background: rgba(0,0,0,0.7);
-    box-shadow: 0 0 30px rgba(0,0,0,0.8);
 }
 
-h2 {
-    text-align: center;
-}
-
-/* INPUT */
 .input-box {
     margin: 15px 0;
 }
@@ -50,14 +37,8 @@ h2 {
     border: none;
     background: rgba(255,255,255,0.1);
     color: white;
-    font-size: 16px;
 }
 
-input::placeholder {
-    color: #ccc;
-}
-
-/* BUTTON */
 button {
     width: 100%;
     padding: 15px;
@@ -68,22 +49,15 @@ button {
     font-weight: bold;
     background: linear-gradient(45deg,#00c6ff,#0072ff);
     color: white;
-    box-shadow: 0 0 15px #00c6ff;
-}
-
-button:hover {
-    transform: scale(1.05);
 }
 
 .call-btn {
     background: linear-gradient(45deg,#00ff7f,#00c853);
-    box-shadow: 0 0 15px lime;
 }
 
-.install-btn {
-    background: linear-gradient(45deg,#3b82f6,#2563eb);
+.download-btn {
+    background: linear-gradient(45deg,#f59e0b,#f97316);
 }
-
 </style>
 </head>
 
@@ -129,17 +103,13 @@ button:hover {
 
 <button onclick="book()">🚀 Book via WhatsApp</button>
 <button class="call-btn" onclick="callNow()">📲 Call Now</button>
-
-<!-- ONLY INSTALL BUTTON -->
-<button class="install-btn" onclick="installApp()">📥 Install App</button>
+<button class="download-btn" onclick="downloadApp()">📥 Download App</button>
 
 </div>
 
 <script>
 
-// BOOKING
 function book(){
-
 let name=document.getElementById("name").value;
 let phone=document.getElementById("phone").value;
 let pickup=document.getElementById("pickup").value;
@@ -166,33 +136,12 @@ Passengers: ${persons}`;
 window.open("https://wa.me/916362635718?text="+encodeURIComponent(msg));
 }
 
-// CALL
 function callNow(){
 window.open("tel:6362635718");
 }
 
-// INSTALL APP (PWA)
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-function installApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => {
-      deferredPrompt = null;
-    });
-  } else {
-    alert("Open in Chrome and click Install");
-  }
-}
-
-// SERVICE WORKER
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
+function downloadApp(){
+window.open("https://drive.google.com/file/d/1aWDUBRxvltIPe0dzAZQHKnyP4YWnHScS/view?usp=drivesdk");
 }
 
 </script>
