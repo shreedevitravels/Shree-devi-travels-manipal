@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Booking History</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    color:white;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    padding:20px;
+    padding-bottom:80px;
+}
+
+/* TITLE */
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* CARD */
+.card{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    animation: fadeIn 0.4s ease;
+}
+
+.card b{
+    color:#00c6ff;
+}
+
+/* EMPTY TEXT */
+.empty{
+    text-align:center;
+    margin-top:50px;
+    color:#ccc;
+}
+
+/* BUTTONS */
+.btn{
+    margin-top:10px;
+    padding:8px 12px;
+    border:none;
+    border-radius:20px;
+    font-size:12px;
+    cursor:pointer;
+}
+
+.repeat{
+    background: linear-gradient(45deg,#00c6ff,#0072ff);
+    color:white;
+}
+
+.delete{
+    background: linear-gradient(45deg,#ff4d4d,#ff0000);
+    color:white;
+}
+
+/* BOTTOM MENU */
+.bottom-bar{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #111;
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0;
+}
+
+.bottom-bar a{
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<h2>📄 Booking History</h2>
+<div id="list"></div>
+
+<!-- BOTTOM MENU -->
+<div class="bottom-bar">
+    <a href="index.html">🏠<br>Home</a>
+    <a href="history.html">📄<br>History</a>
+    <a href="#" onclick="callNow()">📞<br>Call</a>
+</div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("bookings")) || [];
+
+let output="";
+
+if(data.length === 0){
+    output = "<div class='empty'>No bookings yet 😔</div>";
+}else{
+    data.reverse().forEach((b,index) => {
+        output += `
+        <div class="card">
+        <b>👤 ${b.name}</b><br>
+        📞 ${b.phone}<br>
+        📍 ${b.pickup} ➝ ${b.drop}<br>
+        📅 ${b.date} ⏰ ${b.time}<br>
+        👥 ${b.persons} persons
+
+        <br>
+        <button class="btn repeat" onclick="repeatBooking(${index})">Repeat</button>
+        <button class="btn delete" onclick="deleteBooking(${index})">Delete</button>
+        </div>
+        `;
+    });
+}
+
+document.getElementById("list").innerHTML = output;
+
+/* CALL */
+function callNow(){
+    window.open("tel:6362635718");
+}
+
+/* DELETE */
+function deleteBooking(i){
+    let data = JSON.parse(localStorage.getItem("bookings")) || [];
+    data.splice(i,1);
+    localStorage.setItem("bookings", JSON.stringify(data));
+    location.reload();
+}
+
+/* REPEAT BOOKING */
+function repeatBooking(i){
+    let data = JSON.parse(localStorage.getItem("bookings")) || [];
+    let b = data[i];
+
+    let msg=`🚗 Booking Request
+
+Name: ${b.name}
+Phone: ${b.phone}
+From: ${b.pickup}
+To: ${b.drop}
+Date: ${b.date}
+Time: ${b.time}
+Passengers: ${b.persons}`;
+
+    window.open("https://wa.me/916362635718?text="+encodeURIComponent(msg));
+}
+</script>
+
+</body>
+</html>

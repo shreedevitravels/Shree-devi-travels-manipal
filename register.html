@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create Account - Shree Devi Travels</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#2f4f8f,#1ba6d2);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    color:white;
+}
+
+.card{
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(10px);
+    padding:25px;
+    border-radius:25px;
+    width:90%;
+    max-width:350px;
+    text-align:center;
+}
+
+.card img{
+    width:90px;
+    margin-bottom:10px;
+}
+
+h1{
+    margin:10px 0 20px;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    border:none;
+    border-radius:15px;
+    outline:none;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:30px;
+    margin-top:10px;
+    background:linear-gradient(45deg,#00c6ff,#0072ff);
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.error{
+    color:#ff4d4d;
+    font-size:14px;
+    text-align:left;
+    display:none;
+}
+
+.success{
+    color:#00ffae;
+    font-size:14px;
+    text-align:left;
+    display:none;
+}
+
+.link{
+    margin-top:10px;
+    display:block;
+    color:#00c6ff;
+    cursor:pointer;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<img src="logo.png">
+<h1>Create Account</h1>
+
+<input type="text" id="name" placeholder="Full Name">
+<div id="nameError" class="error">Enter name</div>
+
+<input type="email" id="email" placeholder="Email">
+<div id="emailError" class="error">Enter email</div>
+
+<input type="password" id="password" placeholder="Password">
+<div id="passError" class="error">Enter password</div>
+
+<button onclick="register()">Create Account</button>
+
+<div id="successMsg" class="success">Account created successfully ✅</div>
+
+<span class="link" onclick="goLogin()">Already have account? Login</span>
+
+</div>
+
+<script>
+
+function register(){
+
+let name=document.getElementById("name").value;
+let email=document.getElementById("email").value;
+let pass=document.getElementById("password").value;
+
+// reset errors
+document.getElementById("nameError").style.display="none";
+document.getElementById("emailError").style.display="none";
+document.getElementById("passError").style.display="none";
+
+if(name==""){
+document.getElementById("nameError").style.display="block";
+return;
+}
+
+if(email==""){
+document.getElementById("emailError").style.display="block";
+return;
+}
+
+if(pass==""){
+document.getElementById("passError").style.display="block";
+return;
+}
+
+// SAVE (demo local storage)
+let user = {name,email,password:pass};
+localStorage.setItem("user", JSON.stringify(user));
+
+document.getElementById("successMsg").style.display="block";
+
+// redirect after 1 sec
+setTimeout(()=>{
+window.location.href="login.html";
+},1000);
+
+}
+
+function goLogin(){
+window.location.href="login.html";
+}
+
+</script>
+
+</body>
+</html>

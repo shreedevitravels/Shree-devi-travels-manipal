@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Account - Shree Devi Travels</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0ea5e9, #2563eb);
+      color: white;
+      text-align: center;
+      padding-top: 60px;
+    }
+
+    .logo {
+      width: 100px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin: 5px 0;
+    }
+
+    .box {
+      background: rgba(0,0,0,0.4);
+      padding: 20px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 350px;
+      margin: auto;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 25px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 25px;
+      border: none;
+      background: #0ea5e9;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .link-btn {
+      background: transparent;
+      border: 1px solid white;
+      margin-top: 10px;
+    }
+
+    /* 🔔 ALERT */
+    .alert-box {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .alert-content {
+      background: white;
+      color: black;
+      padding: 20px;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+      animation: popup 0.3s ease;
+    }
+
+    .alert-content button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      background: #0ea5e9;
+      color: white;
+      border-radius: 10px;
+    }
+
+    @keyframes popup {
+      from {transform: scale(0.7);}
+      to {transform: scale(1);}
+    }
+  </style>
+</head>
+
+<body>
+
+<img src="logo.png" class="logo">
+
+<h1>Create Account</h1>
+
+<div class="box">
+  <input id="name" placeholder="Full Name">
+  <input id="phone" placeholder="Phone Number">
+
+  <button onclick="signup()">Create Account</button>
+
+  <button class="link-btn" onclick="goLogin()">Back to Login</button>
+</div>
+
+<!-- 🔔 ALERT -->
+<div id="customAlert" class="alert-box">
+  <div class="alert-content">
+    <p id="alertText"></p>
+    <button onclick="closeAlert()">OK</button>
+  </div>
+</div>
+
+<script>
+function showAlert(msg) {
+  document.getElementById("alertText").innerText = msg;
+  document.getElementById("customAlert").style.display = "flex";
+}
+
+function closeAlert() {
+  document.getElementById("customAlert").style.display = "none";
+}
+
+function signup() {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+
+  if(name === "" || phone === ""){
+    showAlert("Fill all details ❌");
+    return;
+  }
+
+  const user = { name: name, phone: phone };
+  localStorage.setItem("user", JSON.stringify(user));
+
+  showAlert("Account Created ✅");
+
+  setTimeout(() => {
+    window.location.href = "login.html";
+  }, 1000);
+}
+
+function goLogin(){
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
