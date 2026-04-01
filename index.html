@@ -148,19 +148,12 @@ button {
 <div class="bottom-bar">
     <a href="index.html">🏠<br>Home</a>
     <a href="history.html">📄<br>History</a>
-    <a href="login.html">👤<br>Profile</a>
     <a href="#" onclick="callNow()">📞<br>Call</a>
 </div>
 
 <script>
 
 function book(){
-
-// 🔐 DIRECT LOGIN REDIRECT (NO ALERT)
-if(localStorage.getItem("loggedIn")!=="true"){
-    window.location.href="login.html";
-    return;
-}
 
 let name=document.getElementById("name").value;
 let phone=document.getElementById("phone").value;
