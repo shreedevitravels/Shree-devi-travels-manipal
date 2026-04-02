@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Cab Service in Manipal</title>
+
+<title>Shree Devi Travels Manipal | Cab Service</title>
+
+<meta name="description" content="Shree Devi Travels Manipal. Best cab service in Manipal. Call +91 6362635718 or +91 7019849902 for booking.">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="canonical" href="https://shreedevitravels.github.io/">
+
+<meta property="og:title" content="Shree Devi Travels Manipal">
+<meta property="og:description" content="Your Journey, Our Responsibility. Book your cab now.">
 
 <style>
 body {
@@ -96,7 +105,7 @@ button {
 
 <header>
     <img src="logo.png" width="90">
-    <h1>SHREE DEVI CAB SERVICE MANIPAL</h1>
+    <h1>Shree Devi Travels Manipal</h1>
     <p class="tagline">Your Journey, Our Responsibility</p>
     <p>📞 +91 63626 35718 | +91 70198 49902</p>
 </header>
@@ -136,7 +145,7 @@ button {
 <button onclick="book()">🚀 Book via WhatsApp</button>
 <button class="call-btn" onclick="callNow()">📲 Call Now</button>
 
-<div class="version">Version 3.0</div>
+<div class="version">Version 4.0</div>
 
 </div>
 
@@ -163,13 +172,11 @@ alert("Fill all details ❗");
 return;
 }
 
-// SAVE HISTORY
 let booking = {name, phone, pickup, drop, date, time, persons};
 let allBookings = JSON.parse(localStorage.getItem("bookings")) || [];
 allBookings.push(booking);
 localStorage.setItem("bookings", JSON.stringify(allBookings));
 
-// MESSAGE
 let msg=`🚗 Booking Request
 
 Name: ${name}
@@ -182,14 +189,12 @@ Passengers: ${persons}`;
 
 let encodedMsg = encodeURIComponent(msg);
 
-// ✅ 3 NUMBERS ADDED
 let numbers = [
 "916362635718",
 "917019849902",
 "918431260119"
 ];
 
-// OPEN WHATSAPP
 numbers.forEach(function(num,index){
 setTimeout(function(){
 window.open("https://wa.me/"+num+"?text="+encodedMsg,"_blank");
