@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Devi Travels</title>
+<title>Cab Service in Manipal</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -14,14 +14,12 @@ body {
     padding-bottom: 70px;
 }
 
-/* HEADER */
 header {
     text-align: center;
     padding: 20px;
     background: linear-gradient(45deg,#0d6efd,#00c6ff);
 }
 
-/* FORM */
 .container {
     margin: 20px;
     padding: 25px;
@@ -42,7 +40,6 @@ header {
     color: white;
 }
 
-/* BUTTON */
 button {
     width: 100%;
     padding: 15px;
@@ -71,7 +68,6 @@ button {
     margin-top:15px;
 }
 
-/* BOTTOM MENU */
 .bottom-bar{
     position: fixed;
     bottom: 0;
@@ -100,7 +96,7 @@ button {
 
 <header>
     <img src="logo.png" width="90">
-    <h1>Shree Devi Travels Manipal</h1>
+    <h1>SHREE DEVI CAB SERVICE MANIPAL</h1>
     <p class="tagline">Your Journey, Our Responsibility</p>
     <p>📞 +91 63626 35718 | +91 70198 49902</p>
 </header>
@@ -144,7 +140,6 @@ button {
 
 </div>
 
-<!-- BOTTOM MENU -->
 <div class="bottom-bar">
     <a href="index.html">🏠<br>Home</a>
     <a href="history.html">📄<br>History</a>
@@ -174,7 +169,7 @@ let allBookings = JSON.parse(localStorage.getItem("bookings")) || [];
 allBookings.push(booking);
 localStorage.setItem("bookings", JSON.stringify(allBookings));
 
-// WHATSAPP
+// MESSAGE
 let msg=`🚗 Booking Request
 
 Name: ${name}
@@ -185,7 +180,22 @@ Date: ${date}
 Time: ${time}
 Passengers: ${persons}`;
 
-window.open("https://wa.me/916362635718?text="+encodeURIComponent(msg));
+let encodedMsg = encodeURIComponent(msg);
+
+// ✅ 3 NUMBERS ADDED
+let numbers = [
+"916362635718",
+"917019849902",
+"918431260119"
+];
+
+// OPEN WHATSAPP
+numbers.forEach(function(num,index){
+setTimeout(function(){
+window.open("https://wa.me/"+num+"?text="+encodedMsg,"_blank");
+}, index * 1500);
+});
+
 }
 
 function callNow(){
