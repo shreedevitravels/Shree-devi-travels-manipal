@@ -7,7 +7,7 @@
 <style>
 body{
 margin:0;
-background:#111;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
 font-family:sans-serif;
 padding:20px;
@@ -15,7 +15,9 @@ padding:20px;
 
 h2{
 text-align:center;
-color:#00c6ff;
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .input-box{
@@ -40,6 +42,7 @@ margin-top:10px;
 background:linear-gradient(45deg,#00c6ff,#0072ff);
 color:white;
 font-weight:bold;
+box-shadow:0 0 10px rgba(0,198,255,0.5);
 }
 
 .review{
@@ -48,6 +51,27 @@ padding:12px 0;
 }
 
 .star{color:gold;}
+
+.summary{
+background:rgba(255,255,255,0.08);
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+}
+
+.bar-bg{
+background:#333;
+height:6px;
+border-radius:5px;
+margin:5px 0;
+}
+
+.bar-fill{
+height:6px;
+background:linear-gradient(90deg,gold,orange);
+width:0%;
+border-radius:5px;
+}
 </style>
 </head>
 
@@ -55,7 +79,20 @@ padding:12px 0;
 
 <h2>⭐ Customer Reviews</h2>
 
-<!-- ⭐ INPUT HERE -->
+<!-- 🔥 REVIEW SUMMARY -->
+<div class="summary">
+<h3>Review Summary</h3>
+<h1 id="avg">0.0</h1>
+<p id="total">(0 reviews)</p>
+
+<div>5 ⭐ <div class="bar-bg"><div id="b5" class="bar-fill"></div></div></div>
+<div>4 ⭐ <div class="bar-bg"><div id="b4" class="bar-fill"></div></div></div>
+<div>3 ⭐ <div class="bar-bg"><div id="b3" class="bar-fill"></div></div></div>
+<div>2 ⭐ <div class="bar-bg"><div id="b2" class="bar-fill"></div></div></div>
+<div>1 ⭐ <div class="bar-bg"><div id="b1" class="bar-fill"></div></div></div>
+</div>
+
+<!-- INPUT -->
 <div class="input-box">
 <input type="text" id="rname" placeholder="👤 Your Name">
 </div>
@@ -66,11 +103,11 @@ padding:12px 0;
 
 <div class="input-box">
 <select id="rstar">
-<option value="★★★★★">★★★★★ Excellent</option>
-<option value="★★★★☆">★★★★☆ Good</option>
-<option value="★★★☆☆">★★★☆☆ Average</option>
-<option value="★★☆☆☆">★★☆☆☆ Bad</option>
-<option value="★☆☆☆☆">★☆☆☆☆ Very Bad</option>
+<option value="5">★★★★★ Excellent</option>
+<option value="4">★★★★☆ Good</option>
+<option value="3">★★★☆☆ Average</option>
+<option value="2">★★☆☆☆ Bad</option>
+<option value="1">★☆☆☆☆ Very Bad</option>
 </select>
 </div>
 
@@ -78,7 +115,7 @@ padding:12px 0;
 
 <hr>
 
-<!-- ⭐ DISPLAY -->
+<!-- REVIEWS -->
 <div id="reviews"></div>
 
 <!-- FIREBASE -->
@@ -104,25 +141,48 @@ alert("Enter review");
 return;
 }
 
-await addDoc(collection(db,"reviews"),{name,text,star});
+await addDoc(collection(db,"reviews"),{name,text,star:Number(star)});
 
-// clear
 rname.value="";
 rtext.value="";
 }
 
-// SHOW REVIEWS LIVE
+// LIVE DATA + SUMMARY
 onSnapshot(collection(db,"reviews"), (snap)=>{
 let html="";
+let total=0,sum=0;
+let count={1:0,2:0,3:0,4:0,5:0};
+
 snap.forEach(doc=>{
 let r=doc.data();
+let star=r.star;
+
+total++;
+sum+=star;
+count[star]++;
+
 html+=`
 <div class="review">
 <b>${r.name}</b><br>
-<span class="star">${r.star}</span><br>
+<span class="star">${"★".repeat(star)}</span><br>
 ${r.text}
 </div>`;
 });
+
+// AVG
+let avg= total? (sum/total).toFixed(1):0;
+avg.innerText=avg;
+document.getElementById("avg").innerText=avg;
+document.getElementById("total").innerText=`(${total} reviews)`;
+
+// 🔥 BAR LOGIC (correct)
+let max=Math.max(count[1],count[2],count[3],count[4],count[5]);
+
+for(let i=1;i<=5;i++){
+let percent=max?(count[i]/max)*100:0;
+document.getElementById("b"+i).style.width=percent+"%";
+}
+
 document.getElementById("reviews").innerHTML=html;
 });
 </script>
