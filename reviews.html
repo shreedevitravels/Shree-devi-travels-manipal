@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Customer Reviews</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+margin:0;
+background:#111;
+color:white;
+font-family:sans-serif;
+padding:20px;
+}
+
+h2{
+text-align:center;
+color:#00c6ff;
+}
+
+.input-box{
+margin:10px 0;
+}
+
+.input-box input, select{
+width:100%;
+padding:12px;
+border-radius:25px;
+border:none;
+background:rgba(255,255,255,0.1);
+color:white;
+}
+
+button{
+width:100%;
+padding:12px;
+border-radius:25px;
+border:none;
+margin-top:10px;
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+color:white;
+font-weight:bold;
+}
+
+.review{
+border-bottom:1px solid #333;
+padding:12px 0;
+}
+
+.star{color:gold;}
+</style>
+</head>
+
+<body>
+
+<h2>⭐ Customer Reviews</h2>
+
+<!-- ⭐ INPUT HERE -->
+<div class="input-box">
+<input type="text" id="rname" placeholder="👤 Your Name">
+</div>
+
+<div class="input-box">
+<input type="text" id="rtext" placeholder="✍️ Write your review">
+</div>
+
+<div class="input-box">
+<select id="rstar">
+<option value="★★★★★">★★★★★ Excellent</option>
+<option value="★★★★☆">★★★★☆ Good</option>
+<option value="★★★☆☆">★★★☆☆ Average</option>
+<option value="★★☆☆☆">★★☆☆☆ Bad</option>
+<option value="★☆☆☆☆">★☆☆☆☆ Very Bad</option>
+</select>
+</div>
+
+<button onclick="addReview()">Submit Review</button>
+
+<hr>
+
+<!-- ⭐ DISPLAY -->
+<div id="reviews"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey:"AIzaSy...",
+authDomain:"shree-devi-reviews.firebaseapp.com",
+projectId:"shree-devi-reviews"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ADD REVIEW
+window.addReview = async function(){
+let name=rname.value, text=rtext.value, star=rstar.value;
+
+if(name==""||text==""){
+alert("Enter review");
+return;
+}
+
+await addDoc(collection(db,"reviews"),{name,text,star});
+
+// clear
+rname.value="";
+rtext.value="";
+}
+
+// SHOW REVIEWS LIVE
+onSnapshot(collection(db,"reviews"), (snap)=>{
+let html="";
+snap.forEach(doc=>{
+let r=doc.data();
+html+=`
+<div class="review">
+<b>${r.name}</b><br>
+<span class="star">${r.star}</span><br>
+${r.text}
+</div>`;
+});
+document.getElementById("reviews").innerHTML=html;
+});
+</script>
+
+</body>
+</html>
